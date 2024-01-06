@@ -1,14 +1,16 @@
 package main
 
 import (
-    "fmt"
-    "net/http"
+	"log"
+
+	"github.com/joho/godotenv"
 )
 
-func main() {
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "¡Hola, mundo!")
-    })
-
-    http.ListenAndServe(":8080", nil)
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
+
+func main() {}
