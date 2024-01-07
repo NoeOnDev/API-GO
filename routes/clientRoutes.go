@@ -3,15 +3,16 @@ package routes
 import (
     "net/http"
     "github.com/NoeAlejandroRodriguezMoto/API-GO/controllers"
+    "github.com/gin-gonic/gin"
 )
 
-func ClientRoutes(c *controllers.ClientController) {
-    http.HandleFunc("/client", func(w http.ResponseWriter, r *http.Request) {
-        switch r.Method {
+func ClientRoutes(router *gin.Engine, c *controllers.ClientController) {
+    router.Any("/client", func(ctx *gin.Context) {
+        switch ctx.Request.Method {
         case "POST":
-            c.Create(w, r)
+            c.Create(ctx)
         default:
-            http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+            ctx.JSON(http.StatusMethodNotAllowed, gin.H{"error": "Method not allowed"})
         }
     })
 }
