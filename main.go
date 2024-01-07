@@ -7,6 +7,8 @@ import (
 
     "github.com/joho/godotenv"
     "github.com/NoeAlejandroRodriguezMoto/API-GO/database"
+    "github.com/NoeAlejandroRodriguezMoto/API-GO/routes"
+    "github.com/NoeAlejandroRodriguezMoto/API-GO/controllers"
 )
 
 func init() {
@@ -19,6 +21,9 @@ func init() {
 func main() {
     db := database.ConnectDB()
     defer db.Close()
+
+    clientController := controllers.ClientController{DB: db}
+    routes.ClientRoutes(&clientController)
 
     port := os.Getenv("GO_PORT")
     if port == "" {
