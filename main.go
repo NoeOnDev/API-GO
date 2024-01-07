@@ -2,9 +2,9 @@ package main
 
 import (
     "log"
-    "net/http"
     "os"
 
+    "github.com/gin-gonic/gin"
     "github.com/joho/godotenv"
     "github.com/NoeAlejandroRodriguezMoto/API-GO/database"
     "github.com/NoeAlejandroRodriguezMoto/API-GO/routes"
@@ -23,7 +23,9 @@ func main() {
     defer db.Close()
 
     clientController := controllers.ClientController{DB: db}
-    routes.ClientRoutes(&clientController)
+
+    router := gin.Default()
+    routes.ClientRoutes(router, &clientController)
 
     port := os.Getenv("GO_PORT")
     if port == "" {
@@ -31,5 +33,5 @@ func main() {
     }
 
     log.Printf("Listening on port %s\n", port)
-    log.Fatal(http.ListenAndServe(":"+port, nil))
+    log.Fatal(router.Run(":" + port))
 }
