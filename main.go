@@ -15,6 +15,9 @@ func main() {
 	}
 
 	PORT := os.Getenv("GO_PORT")
+	if PORT == "" {
+		PORT = "8080"
+	}
 
 	r := gin.Default()
 	r.Run(":" + PORT)
