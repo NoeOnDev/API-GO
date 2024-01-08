@@ -1,0 +1,24 @@
+package controllers
+
+import (
+    "net/http"
+    "database/sql"
+    "github.com/gin-gonic/gin"
+    "github.com/NoeAlejandroRodriguezMoto/API-GO/models"
+)
+
+func CreateClient(c *gin.Context, db *sql.DB) {
+    var client models.Client
+    if err := c.ShouldBindJSON(&client); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    _, err := db.Exec("INSERT INTO clients (firstname, lastname, birthdate, phone, email, password) VALUES ($1, $2, $3, $4, $5, $6)", client.FirstName, client.LastName, client.BirthDate, client.Phone, client.Email, client.Password)
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"data": client})
+}
