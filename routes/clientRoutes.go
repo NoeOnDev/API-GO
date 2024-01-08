@@ -14,3 +14,9 @@ func ClientRoutes(r *gin.Engine, db *sql.DB) {
         controllers.GetClients(c, db)
     })
 }
+
+func AuthRoutes(r *gin.Engine, db *sql.DB) {
+    r.POST("/login", func(c *gin.Context) {
+        controllers.Login(c, db)
+    })
+}

@@ -25,5 +25,6 @@ func main() {
 
     r := gin.Default()
     routes.ClientRoutes(r, db)
+    routes.AuthRoutes(r, db)
     r.Run(":" + PORT)
 }
