@@ -24,7 +24,7 @@ func CreateClient(c *gin.Context, db *sql.DB) {
 }
 
 func GetClients(c *gin.Context, db *sql.DB) {
-    rows, err := db.Query("SELECT firstname, lastname, birthdate, phone, email, password FROM clients")
+    rows, err := db.Query("SELECT id, firstname, lastname, birthdate, phone, email, password FROM clients")
     if err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
         return
@@ -34,7 +34,7 @@ func GetClients(c *gin.Context, db *sql.DB) {
     var clients []models.Client
     for rows.Next() {
         var client models.Client
-        if err := rows.Scan(&client.FirstName, &client.LastName, &client.BirthDate, &client.Phone, &client.Email, &client.Password); err != nil {
+        if err := rows.Scan(&client.ID, &client.FirstName, &client.LastName, &client.BirthDate, &client.Phone, &client.Email, &client.Password); err != nil {
             c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
             return
         }

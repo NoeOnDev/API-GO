@@ -5,6 +5,7 @@ import (
 )
 
 type Client struct {
+	ID		  int       `json:"id"`
     FirstName string    `json:"firstname"`
     LastName  string    `json:"lastname"`
     BirthDate time.Time `json:"birthdate"`

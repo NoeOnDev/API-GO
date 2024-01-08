@@ -10,4 +10,7 @@ func ClientRoutes(r *gin.Engine, db *sql.DB) {
     r.POST("/clients", func(c *gin.Context) {
         controllers.CreateClient(c, db)
     })
+    r.GET("/clients", func(c *gin.Context) {
+        controllers.GetClients(c, db)
+    })
 }
