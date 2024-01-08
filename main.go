@@ -6,7 +6,7 @@ import (
     "github.com/joho/godotenv"
     "github.com/gin-gonic/gin"
     "github.com/NoeAlejandroRodriguezMoto/API-GO/database"
-    "github.com/NoeAlejandroRodriguezMoto/API-GO/controllers"
+    "github.com/NoeAlejandroRodriguezMoto/API-GO/routes"
 )
 
 func main() {
@@ -24,8 +24,6 @@ func main() {
     db := database.ConnectDB()
 
     r := gin.Default()
-    r.POST("/clients", func(c *gin.Context) {
-        controllers.CreateClient(c, db)
-    })
+    routes.ClientRoutes(r, db)
     r.Run(":" + PORT)
 }
