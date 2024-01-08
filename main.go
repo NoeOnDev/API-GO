@@ -5,6 +5,7 @@ import (
 	"log"
 	"github.com/joho/godotenv"
 	"github.com/gin-gonic/gin"
+	"github.com/NoeAlejandroRodriguezMoto/API-GO/database"
 )
 
 func main() {
@@ -18,6 +19,8 @@ func main() {
 	if PORT == "" {
 		PORT = "8080"
 	}
+
+	db := database.ConnectDB()
 
 	r := gin.Default()
 	r.Run(":" + PORT)
