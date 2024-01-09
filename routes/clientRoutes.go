@@ -13,6 +13,9 @@ func ClientRoutes(r *gin.Engine, db *sql.DB) {
     r.GET("/clients", func(c *gin.Context) {
         controllers.GetClients(c, db)
     })
+    r.PUT("/clients/:id", func(c *gin.Context) {
+        controllers.UpdateClient(c, db)
+    })
 }
 
 func AuthRoutes(r *gin.Engine, db *sql.DB) {
