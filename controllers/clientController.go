@@ -83,3 +83,20 @@ func DeleteClient(c *gin.Context, db *sql.DB) {
 
     c.JSON(http.StatusOK, gin.H{"data": "Cliente eliminado correctamente"})
 }
+
+func GetClient(c *gin.Context, db *sql.DB) {
+    id := c.Param("id")
+    row := db.QueryRow("SELECT id, firstname, lastname, birthdate, phone, email FROM clients WHERE id = $1", id)
+
+    var client models.Client
+    if err := row.Scan(&client.ID, &client.FirstName, &client.LastName, &client.BirthDate, &client.Phone, &client.Email); err != nil {
+        if err == sql.ErrNoRows {
+            c.JSON(http.StatusNotFound, gin.H{"error": "Cliente no encontrado"})
+        } else {
+            c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        }
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"data": client})
+}
