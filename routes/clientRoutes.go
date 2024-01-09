@@ -13,8 +13,14 @@ func ClientRoutes(r *gin.Engine, db *sql.DB) {
     r.GET("/clients", func(c *gin.Context) {
         controllers.GetClients(c, db)
     })
+    r.GET("/clients/:id", func(c *gin.Context) {
+        controllers.GetClient(c, db)
+    })
     r.PUT("/clients/:id", func(c *gin.Context) {
         controllers.UpdateClient(c, db)
+    })
+    r.DELETE("/clients/:id", func(c *gin.Context) {
+        controllers.DeleteClient(c, db)
     })
 }
 
