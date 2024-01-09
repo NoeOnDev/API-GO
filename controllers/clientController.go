@@ -56,3 +56,19 @@ func GetClients(c *gin.Context, db *sql.DB) {
 
     c.JSON(http.StatusOK, gin.H{"data": clients})
 }
+
+func UpdateClient(c *gin.Context, db *sql.DB) {
+    var client models.Client
+    if err := c.ShouldBindJSON(&client); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    _, err := db.Exec("UPDATE clients SET firstname = $1, lastname = $2, birthdate = $3, phone = $4, email = $5 WHERE id = $6", client.FirstName, client.LastName, client.BirthDate, client.Phone, client.Email, client.ID)
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"data": client})
+}
