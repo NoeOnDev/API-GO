@@ -72,3 +72,14 @@ func UpdateClient(c *gin.Context, db *sql.DB) {
 
     c.JSON(http.StatusOK, gin.H{"data": client})
 }
+
+func DeleteClient(c *gin.Context, db *sql.DB) {
+    id := c.Param("id")
+    _, err := db.Exec("DELETE FROM clients WHERE id = $1", id)
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"data": "Cliente eliminado correctamente"})
+}
