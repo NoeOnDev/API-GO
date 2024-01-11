@@ -5,14 +5,13 @@ import (
 )
 
 type User struct {
-    TableName struct{} `pg:"users"`
     ID        int      `pg:"id,pk"`
-    FirstName string   `pg:"first_name" validate:"required"`
-    LastName  string   `pg:"last_name" validate:"required"`
+    FirstName string   `pg:"firstname" validate:"required"`
+    LastName  string   `pg:"lastname" validate:"required"`
     Username  string   `pg:"username,unique" validate:"required"`
     Phone     string   `pg:"phone" validate:"required"`
     Email     string   `pg:"email,unique" validate:"required,email"`
-    Password  string   `pg:"password" validate:"required"`
+    Password  string   `pg:"password" validate:"required, min=6"`
 }
 
 func (u *User) Validate() error {

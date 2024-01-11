@@ -6,7 +6,7 @@ import (
     "github.com/gin-gonic/gin"
     "github.com/joho/godotenv"
     "github.com/NoeAlejandroRodriguezMoto/API-GO/database"
-    "github.com/NoeAlejandroRodriguezMoto/API-GO/controllers"
+    "github.com/NoeAlejandroRodriguezMoto/API-GO/routes"
 )
 
 func main() {
@@ -25,9 +25,7 @@ func main() {
 
     router := gin.Default()
 
-    router.POST("/register", func(c *gin.Context) {
-        controllers.Register(c, db)
-    })
+    routes.UserRoutes(router, db)
 
     router.Run(":" + port)
 }

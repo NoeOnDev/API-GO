@@ -5,6 +5,7 @@ go 1.21.5
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-pg/pg/v10 v10.12.0
+	github.com/go-playground/validator/v10 v10.16.0
 	github.com/joho/godotenv v1.5.1
 	golang.org/x/crypto v0.18.0
 )
@@ -18,7 +19,6 @@ require (
 	github.com/go-pg/zerochecker v0.2.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.16.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
