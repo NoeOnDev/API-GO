@@ -11,7 +11,7 @@ type User struct {
     Username  string   `pg:"username,unique" validate:"required"`
     Phone     string   `pg:"phone" validate:"required"`
     Email     string   `pg:"email,unique" validate:"required,email"`
-    Password  string   `pg:"password" validate:"required, min=6"`
+    Password  string   `pg:"password" validate:"required"`
 }
 
 func (u *User) Validate() error {

@@ -9,11 +9,12 @@ import (
 )
 
 func Register(c *gin.Context, db *pg.DB) {
-    var user models.User
-    if err := c.ShouldBindJSON(&user); err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    temp, exists := c.Get("user")
+    if !exists {
         return
     }
+
+    user := temp.(models.User)
 
     hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
     if err != nil {
