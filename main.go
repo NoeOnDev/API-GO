@@ -16,7 +16,10 @@ func main() {
 
 	port := os.Getenv("GO_PORT")
 
-	database.ConnectDB()
+	err = database.ConnectDB()
+	if err != nil {
+		log.Fatal("Error connecting to the database", err)
+	}
 	router := gin.Default()
 	router.Run(":" + port)
 }

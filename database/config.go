@@ -6,7 +6,7 @@ import (
 	"github.com/go-pg/pg/v10"
 )
 
-func ConnectDB() {
+func ConnectDB() error {
 	pgDB := pg.Connect(&pg.Options{
 		Addr:    	os.Getenv("DB_ADDR"),
 		User:   	os.Getenv("DB_USER"),
@@ -19,7 +19,8 @@ func ConnectDB() {
 	_, err := pgDB.Exec("SELECT 1")
 	if err != nil {
 		fmt.Println("Error connecting to the database", err)
-		return
+		return err
 	}
 	fmt.Println("Connection to the database was successful")
+	return nil
 }
