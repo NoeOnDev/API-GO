@@ -1,31 +1,62 @@
 package main
 
 import (
-    "os"
-    "log"
     "github.com/gin-gonic/gin"
     "github.com/joho/godotenv"
-    "github.com/NoeAlejandroRodriguezMoto/API-GO/database"
-    "github.com/NoeAlejandroRodriguezMoto/API-GO/routes"
+    "gorm.io/driver/postgres"
+    "gorm.io/gorm"
+    "os"
 )
+
+type User struct {
+    gorm.Model
+    Name  string
+    Email string `gorm:"type:varchar(100);unique_index"`
+}
+
+var db *gorm.DB
 
 func main() {
     err := godotenv.Load()
     if err != nil {
-        log.Fatal("Error loading .env file")
+        panic("Error loading .env file")
     }
 
-    port := os.Getenv("GO_PORT")
+    dsn := "host=" + os.Getenv("DB_HOST") + " user=" + os.Getenv("DB_USER") + " password=" + os.Getenv("DB_PASS") + " dbname=" + os.Getenv("DB_NAME") + " port=" + os.Getenv("DB_PORT") + " sslmode=disable"
+    db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
-    db, err := database.ConnectDB()
     if err != nil {
-        log.Fatal("Error connecting to the database", err)
+        panic("failed to connect database")
     }
-    defer db.Close()
 
-    router := gin.Default()
+    db.AutoMigrate(&User{})
 
-    routes.UserRoutes(router, db)
+    r := gin.Default()
 
-    router.Run(":" + port)
+    r.GET("/users", GetUsers)
+    r.POST("/users", CreateUser)
+
+    r.Run()
+}
+
+func GetUsers(c *gin.Context) {
+	var users []User
+	if err := db.Find(&users).Error; err != nil {
+		c.JSON(500, gin.H{"error": "Error retrieving users"})
+		return
+	}
+	c.JSON(200, users)
+}
+
+func CreateUser(c *gin.Context) {
+	var user User
+	if err := c.ShouldBindJSON(&user); err != nil {
+		c.JSON(500, gin.H{"error": "Bad request"})
+		return
+	}
+	if err := db.Create(&user).Error; err != nil {
+		c.JSON(500, gin.H{"error": "Error creating user"})
+		return
+	}
+	c.JSON(200, user)
 }
