@@ -5,6 +5,7 @@ go 1.21.5
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/joho/godotenv v1.5.1
+	golang.org/x/crypto v0.18.0
 	gorm.io/driver/postgres v1.5.4
 	gorm.io/gorm v1.25.5
 )
@@ -37,7 +38,6 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	golang.org/x/arch v0.7.0 // indirect
-	golang.org/x/crypto v0.18.0 // indirect
 	golang.org/x/net v0.20.0 // indirect
 	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.16.0 // indirect
