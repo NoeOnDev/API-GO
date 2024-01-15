@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/NoeAlejandroRodriguezMoto/API-GO/database"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -19,7 +21,7 @@ func envLoad() {
 }
 
 func databaseLoad() {
-
+	database.Connect()
 }
 
 func serverAplication() {
