@@ -14,6 +14,7 @@ type User struct {
 	Username string `gorm:"size:255;not null;unique" json:"username"`
 	Email string `gorm:"size:100;not null;unique" json:"email"`
 	Password string `gorm:"size:255;not null;" json:"password"`
+	Pets []Pet
 }
 
 func (user *User) Save() (*User, error) {
@@ -23,7 +24,7 @@ func (user *User) Save() (*User, error) {
 	}
 	return user, nil
 }
-
+ 
 func (user *User) BeforeSave(*gorm.DB) error {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
