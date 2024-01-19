@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/NoeAlejandroRodriguezMoto/API-GO/database"
 	"github.com/NoeAlejandroRodriguezMoto/API-GO/models"
+	"github.com/NoeAlejandroRodriguezMoto/API-GO/controllers"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -29,5 +30,9 @@ func databaseLoad() {
 
 func serverAplication() {
 	r := gin.Default()
+
+	publicRoutes := r.Group("/auth")
+	publicRoutes.POST("/register", controllers.Register)
+	
 	r.Run()
 }
