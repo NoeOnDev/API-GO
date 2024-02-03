@@ -33,6 +33,7 @@ func serverAplication() {
 
 	publicRoutes := r.Group("/auth")
 	publicRoutes.POST("/register", controllers.Register)
+	publicRoutes.POST("/login", controllers.Login)
 	
 	r.Run()
 }
