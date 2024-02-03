@@ -33,33 +33,32 @@ func Register(context *gin.Context) {
 }
 
 func Login(context *gin.Context) {
-	var input models.AuthenticationInput
+    var input models.LoginInput
 
-	if err := context.ShouldBindJSON(&input); err != nil {
+    if err := context.ShouldBindJSON(&input); err != nil {
+        context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
 
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+    user, err := models.FindUserByUsernameOrEmail(input.UsernameOrEmail)
 
-	user, err := models.FindUserByUsernameOrEmail(input.Username)
+    if err != nil {
+        context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
 
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+    err = user.ValidatePassword(input.Password)
 
-	err = user.ValidatePassword(input.Password)
+    if err != nil {
+        context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
 
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+    jwt, err := helpers.GenerateJWT(user)
+    if err != nil {
+        context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
 
-	jwt, err := helpers.GenerateJWT(user)
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	context.JSON(http.StatusOK, gin.H{"jwt": jwt})
-} 
+    context.JSON(http.StatusOK, gin.H{"jwt": jwt})
+}
