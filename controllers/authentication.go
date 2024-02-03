@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/NoeAlejandroRodriguezMoto/API-GO/models"
+	"github.com/NoeAlejandroRodriguezMoto/API-GO/helpers"
 
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -29,4 +30,36 @@ func Register(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusCreated, gin.H{"data": savedUser})
+}
+
+func Login(context *gin.Context) {
+	var input models.AuthenticationInput
+
+	if err := context.ShouldBindJSON(&input); err != nil {
+
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	user, err := models.FindUserByUsernameOrEmail(input.Username)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	err = user.ValidatePassword(input.Password)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	jwt, err := helpers.GenerateJWT(user)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"jwt": jwt})
 }
