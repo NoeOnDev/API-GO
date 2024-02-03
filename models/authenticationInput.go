@@ -5,3 +5,8 @@ type AuthenticationInput struct {
 	Email string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required"`
 }
+
+type LoginInput struct {
+    UsernameOrEmail string `json:"usernameOrEmail" binding:"required"`
+    Password        string `json:"password" binding:"required"`
+}
