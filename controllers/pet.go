@@ -35,13 +35,18 @@ func AddPet(context *gin.Context) {
 }
 
 func GetAllPets(context *gin.Context) {
+    user, err := helpers.CurrentUser(context)
 
-	user, err := helpers.CurrentUser(context)
+    if err != nil {
+        context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
 
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+    pets, err := models.GetAllPetsByUserID(user.ID)
+    if err != nil {
+        context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
 
-	context.JSON(http.StatusOK, gin.H{"data": user.Pets})
+    context.JSON(http.StatusOK, gin.H{"data": pets})
 }
