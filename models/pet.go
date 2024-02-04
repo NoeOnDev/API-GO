@@ -21,3 +21,12 @@ func (pet *Pet) SavePet() (*Pet, error) {
 	}
 	return pet, nil
 }
+
+func GetAllPetsByUserID(userID uint) ([]Pet, error) {
+    var pets []Pet
+    err := database.Database.Preload("User").Where("user_id = ?", userID).Find(&pets).Error
+    if err != nil {
+        return nil, err
+    }
+    return pets, nil
+}
