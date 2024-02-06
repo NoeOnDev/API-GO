@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"github.com/NoeAlejandroRodriguezMoto/API-GO/helpers"
+	"github.com/NoeOnDev/API-GO/helpers"
 	"fmt"
 	"net/http"
 

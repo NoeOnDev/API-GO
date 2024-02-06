@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/NoeAlejandroRodriguezMoto/API-GO/database"
+	"github.com/NoeOnDev/API-GO/database"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"

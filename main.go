@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/NoeAlejandroRodriguezMoto/API-GO/controllers"
-	"github.com/NoeAlejandroRodriguezMoto/API-GO/database"
-	"github.com/NoeAlejandroRodriguezMoto/API-GO/middlewares"
-	"github.com/NoeAlejandroRodriguezMoto/API-GO/models"
+	"github.com/NoeOnDev/API-GO/controllers"
+	"github.com/NoeOnDev/API-GO/database"
+	"github.com/NoeOnDev/API-GO/middlewares"
+	"github.com/NoeOnDev/API-GO/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"

@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"github.com/NoeAlejandroRodriguezMoto/API-GO/helpers"
-	"github.com/NoeAlejandroRodriguezMoto/API-GO/models"
+	"github.com/NoeOnDev/API-GO/helpers"
+	"github.com/NoeOnDev/API-GO/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

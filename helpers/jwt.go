@@ -1,7 +1,7 @@
 package helpers
 
 import (
-	"github.com/NoeAlejandroRodriguezMoto/API-GO/models"
+	"github.com/NoeOnDev/API-GO/models"
 	"errors"
 	"fmt"
 	"os"
